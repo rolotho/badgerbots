@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.badgerbots;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -20,7 +20,7 @@ public class AutoDemo extends LinearOpMode {
         encoderMove(20.5, 0.7);
     }
     public void  encoderMove(double distance, double speed) {
-        double wheelCircumference = 3.5 * Math.PI;
+        double wheelCircumference = 3.78 * Math.PI;
         double wheelMotor = 537.7;
         double ticks = (distance * (wheelMotor / wheelCircumference));
 

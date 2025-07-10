@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.badgerbots;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
@@ -26,15 +26,16 @@ public class HardwareDemo {
         right = hwMap.get(DcMotor.class, "right");
         right.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         right.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        right.setDirection(DcMotorSimple.Direction.REVERSE);
         right.setPower(0);
 
         left = hwMap.get(DcMotor.class, "left");
         left.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         left.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        left.setDirection(DcMotorSimple.Direction.REVERSE);
+//        left.setDirection(DcMotorSimple.Direction.REVERSE);
         left.setPower(0);
         // Initialize servo
-        clawServo = hwMap.get(Servo.class, "ClawServo");
+//        clawServo = hwMap.get(Servo.class, "ClawServo");
     }
     // Call both motors at once
     public void setPower(double motor1, double motor2) {
