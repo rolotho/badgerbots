@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.badgerbots;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 @Autonomous (name = "Auto Red")
@@ -11,11 +12,15 @@ public class AutoDemo extends LinearOpMode {
     HardwareDemo robot = HardwareDemo.getInstance();
     public void runOpMode() {
         robot.init(hardwareMap);
+        robot.left.setDirection(DcMotorSimple.Direction.REVERSE);
+        robot.right.setDirection(DcMotorSimple.Direction.FORWARD);
         telemetry.addData("Status", "Hello drivers!");
         telemetry.update();
 
         waitForStart();
-        encoderMove(20.5, 0.7);
+        encoderMove(20, 0.7);
+        robot.geckoArm.setPower(0.8);
+        encoderMove(20, 0.7);
         turning(100, 0.4);
         encoderMove(20.5, 0.7);
     }
@@ -40,9 +45,8 @@ public class AutoDemo extends LinearOpMode {
         }
         robot.setPower(0, 0);
 
-        robot.left.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        robot.left.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
+    //pos = right
     public void turning(int ticks, double speed) {
         robot.left.setTargetPosition(ticks);
         robot.right.setTargetPosition(-ticks);
@@ -60,7 +64,5 @@ public class AutoDemo extends LinearOpMode {
         }
         robot.setPower(0, 0);
 
-        robot.left.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        robot.left.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
 }

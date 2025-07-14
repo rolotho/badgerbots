@@ -19,21 +19,34 @@ public class TeleOpDemo extends LinearOpMode {
         boolean pressingX = false;
         boolean resetRuntime = false;
         waitForStart();
+        runtime.startTime();
         while (opModeIsActive()) {
             double movement = -(gamepad1.right_trigger - gamepad1.left_trigger);
             double turning = gamepad1.left_stick_x;
-//            double left = movement;
+            double armMovement = gamepad2.left_stick_y;
+            boolean geckoMovement = gamepad1.square;
+
+            if(gamepad1.circle){
+                telemetry.addData("Circle", "!");
+                telemetry.update();
+                movement /= 2;
+                movement /= 2;
+            }
             double left = movement - turning;
             double right = movement + turning;
-//            double right = movement;
             double max = Math.max(Math.abs(left), Math.abs(right));
             if (max > 1.0) {
                 left /= max;
                 right /= max;
             }
+            robot.right.setPower(right);
+            robot.left.setPower(left);
 
             //Test this after lunch;
-            if (gamepad1.dpad_left) {
+            if (gamepad1.circle) {
+                telemetry.addData("Pressed A", "!");
+                telemetry.update();
+                //slow down
                 if (!resetRuntime) {
                     runtime.reset();
                     resetRuntime = true;
@@ -46,31 +59,45 @@ public class TeleOpDemo extends LinearOpMode {
             }
             telemetry.addData("Power", robot.left.getPower());
             telemetry.update();
-            if (gamepad1.dpad_right) {
-                // make it so max speed speeds up
+            if (gamepad1.cross) {
+                // make it so speeds up
                 robot.left.setPower(left*1.25);
                 robot.right.setPower(right*1.25);
             }
-            if (!gamepad1.dpad_right || !gamepad1.dpad_left) {
+
+            if (gamepad2.left_stick_y >= 0.1) {
+                robot.arm.setPower(1);
+            } else if (gamepad2.left_stick_y <= -0.1) {
+                robot.arm.setPower(-1);
+            } else {
+                robot.arm.setPower(0);
+            }
+
+            if (!gamepad1.cross || !gamepad1.circle) {
                 robot.left.setPower(left);
                 robot.right.setPower(right);
             }
-            if (gamepad1.x) {
+            if (gamepad2.x) {
                 // move servo arm for gecko wheel
+                robot.geckoArm.setPower(0.8);
             }
+            else if (gamepad2.y) {
+                robot.geckoArm.setPower(-0.8);
+            }
+            else {
+                robot.geckoArm.setPower(0);
+            }
+            // clawServoRight closed = 0.563
+            // clawServoRight open = 0.697
+            // clawServoLeft closed = 0.362
+            // clawServoLeft open = 0.215
 
-            if (gamepad2.x && !pressingX) {
-                pressingX = true;
-                // move arm
-            } else if (!gamepad2.x && pressingX) {
-                pressingX = false;
-            }
-            if (gamepad2.right_stick_x > 0.1) {
-
-            }
-            if (gamepad2.right_trigger > 0.1) {
-
-            }
+//            if (gamepad2.right_stick_x > 0.1) {
+//
+//            }
+//            if (gamepad2.right_trigger > 0.1) {
+//
+//            }
         }
     }
 }
