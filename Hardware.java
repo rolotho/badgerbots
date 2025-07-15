@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.Range;
 
-public class HardwareDemo {
+public class Hardware {
     // Create motors/servos in code
     public DcMotor right;
     public DcMotor left;
@@ -18,10 +18,10 @@ public class HardwareDemo {
     
     public static double maxSpeed = 1;
 
-    private static HardwareDemo myinstance = null;
-    public static  HardwareDemo getInstance() {
+    private static Hardware myinstance = null;
+    public static  Hardware getInstance() {
         if (myinstance == null) {
-            myinstance = new HardwareDemo();
+            myinstance = new Hardware();
         }
         return myinstance;
     }
@@ -47,6 +47,7 @@ public class HardwareDemo {
         clawServoLeft = hwMap.get(Servo.class, "clawServoLeft");
         clawServoRight = hwMap.get(Servo.class, "clawServoRight");
         geckoArm = hwMap.get(CRServo.class, "geckoArm");
+
     }
     // Call both motors at once
     public void setPower(double motor1, double motor2) {

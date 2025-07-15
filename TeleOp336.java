@@ -4,12 +4,11 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-import org.firstinspires.ftc.teamcode.badgerbots.HardwareDemo;
 //sigma
-@TeleOp (name = "TeleOp Demo")
+@TeleOp(name = "TeleOp")
 
-public class TeleOpDemo extends LinearOpMode {
-    HardwareDemo robot = HardwareDemo.getInstance();
+public class TeleOp336 extends LinearOpMode {
+    Hardware robot = Hardware.getInstance();
     ElapsedTime runtime = new ElapsedTime();
     public void runOpMode() {
         robot.init(hardwareMap);
@@ -26,12 +25,12 @@ public class TeleOpDemo extends LinearOpMode {
             double armMovement = gamepad2.left_stick_y;
             boolean geckoMovement = gamepad1.square;
 
-            if(gamepad1.circle){
-                telemetry.addData("Circle", "!");
-                telemetry.update();
-                movement /= 2;
-                movement /= 2;
-            }
+//            if (gamepad1.circle) {
+//                telemetry.addData("Circle", "!");
+//                telemetry.update();
+//                movement /= 2;
+//                movement /= 2;
+//            }
             double left = movement - turning;
             double right = movement + turning;
             double max = Math.max(Math.abs(left), Math.abs(right));
@@ -77,27 +76,25 @@ public class TeleOpDemo extends LinearOpMode {
                 robot.left.setPower(left);
                 robot.right.setPower(right);
             }
+
             if (gamepad2.x) {
                 // move servo arm for gecko wheel
-                robot.geckoArm.setPower(0.8);
+                robot.geckoArm.setPower(0.4d);
             }
             else if (gamepad2.y) {
-                robot.geckoArm.setPower(-0.8);
+                robot.geckoArm.setPower(-0.4);
             }
             else {
                 robot.geckoArm.setPower(0);
             }
-            // clawServoRight closed = 0.563
-            // clawServoRight open = 0.697
-            // clawServoLeft closed = 0.362
-            // clawServoLeft open = 0.215
 
-//            if (gamepad2.right_stick_x > 0.1) {
-//
-//            }
-//            if (gamepad2.right_trigger > 0.1) {
-//
-//            }
+            if (gamepad2.left_trigger >= 0.1) {
+                robot.clawServoLeft.setPosition(0.215);
+                robot.clawServoRight.setPosition(0.697);
+            } else if (gamepad2.right_trigger >= 0.1) {
+                robot.clawServoLeft.setPosition(0.362);
+                robot.clawServoRight.setPosition(0.563);
+            }
         }
     }
 }

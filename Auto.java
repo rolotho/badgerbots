@@ -7,9 +7,9 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 @Autonomous (name = "Auto Red")
-public class AutoDemo extends LinearOpMode {
+public class Auto extends LinearOpMode {
     private ElapsedTime runtime = new ElapsedTime();
-    HardwareDemo robot = HardwareDemo.getInstance();
+    Hardware robot = Hardware.getInstance();
     public void runOpMode() {
         robot.init(hardwareMap);
         robot.left.setDirection(DcMotorSimple.Direction.REVERSE);
@@ -19,9 +19,15 @@ public class AutoDemo extends LinearOpMode {
 
         waitForStart();
         encoderMove(20, 0.7);
-        robot.geckoArm.setPower(0.8);
+        sleep(1000);
+        robot.geckoArm.setPower(0.5);
+        sleep(2000);
+        robot.geckoArm.setPower(0);
+        sleep(1000);
         encoderMove(20, 0.7);
+        sleep(1000);
         turning(100, 0.4);
+        sleep(1000);
         encoderMove(20.5, 0.7);
     }
     public void  encoderMove(double distance, double speed) {
