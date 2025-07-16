@@ -1,11 +1,17 @@
 package org.firstinspires.ftc.teamcode.badgerbots;
 
+import com.qualcomm.hardware.bosch.BNO055IMU;
+import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.IMU;
+import com.qualcomm.robotcore.hardware.ImuOrientationOnRobot;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.Range;
+
+import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 
 public class Hardware {
     // Create motors/servos in code
@@ -14,7 +20,7 @@ public class Hardware {
     public DcMotor arm;
     public Servo clawServoLeft;
     public Servo clawServoRight;
-    public CRServo geckoArm;
+    public Servo geckoArm;
     
     public static double maxSpeed = 1;
 
@@ -48,8 +54,7 @@ public class Hardware {
         // Initialize servo
         clawServoLeft = hwMap.get(Servo.class, "clawServoLeft");
         clawServoRight = hwMap.get(Servo.class, "clawServoRight");
-        geckoArm = hwMap.get(CRServo.class, "geckoArm");
-
+        geckoArm = hwMap.get(Servo.class, "geckoArm");
     }
     // Call both motors at once
     public void setPower(double motor1, double motor2) {

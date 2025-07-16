@@ -4,12 +4,21 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+
 //sigma
 @TeleOp(name = "TeleOp")
 
 public class TeleOp336 extends LinearOpMode {
     Hardware robot = Hardware.getInstance();
     ElapsedTime runtime = new ElapsedTime();
+    public void geckoArmUp() {
+        robot.geckoArm.setPosition(0.622);
+    }
+    public void geckoArmDown() {
+        robot.geckoArm.setPosition(0.333);
+    }
+
     public void runOpMode() {
         robot.init(hardwareMap);
         telemetry.addData("Status", "Hello, Drivers!");
@@ -20,8 +29,6 @@ public class TeleOp336 extends LinearOpMode {
         waitForStart();
         runtime.startTime();
         while (opModeIsActive()) {
-            telemetry.addData("Ticks for 90*", robot.left.getCurrentPosition());
-            telemetry.update();
             double movement = -(gamepad1.right_trigger - gamepad1.left_trigger);
             double turning = gamepad1.left_stick_x;
             double armMovement = gamepad2.left_stick_y;
@@ -44,9 +51,9 @@ public class TeleOp336 extends LinearOpMode {
             robot.left.setPower(left);
 
             if (gamepad2.left_stick_y >= 0.1) {
-                robot.arm.setPower(1);
+                robot.arm.setPower(0.75);
             } else if (gamepad2.left_stick_y <= -0.1) {
-                robot.arm.setPower(-1);
+                robot.arm.setPower(-0.75);
             } else {
                 robot.arm.setPower(0);
             }
@@ -56,15 +63,14 @@ public class TeleOp336 extends LinearOpMode {
                 robot.right.setPower(right);
             }
 
-            if (gamepad2.x) {
-                // move servo arm for gecko wheel
-                robot.geckoArm.setPower(0.4);
+            if (gamepad2.y) {
+                geckoArmUp();
             }
-            else if (gamepad2.y) {
-                robot.geckoArm.setPower(-0.4);
+            else if (gamepad2.x) {
+                geckoArmDown();
             }
             else {
-                robot.geckoArm.setPower(0);
+                geckoArmUp();
             }
 
             if (gamepad2.left_trigger >= 0.1) {
