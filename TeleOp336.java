@@ -20,17 +20,19 @@ public class TeleOp336 extends LinearOpMode {
         waitForStart();
         runtime.startTime();
         while (opModeIsActive()) {
+            telemetry.addData("Ticks for 90*", robot.left.getCurrentPosition());
+            telemetry.update();
             double movement = -(gamepad1.right_trigger - gamepad1.left_trigger);
             double turning = gamepad1.left_stick_x;
             double armMovement = gamepad2.left_stick_y;
             boolean geckoMovement = gamepad1.square;
 
-//            if (gamepad1.circle) {
-//                telemetry.addData("Circle", "!");
-//                telemetry.update();
-//                movement /= 2;
-//                movement /= 2;
-//            }
+            if (gamepad1.circle) {
+                telemetry.addData("Circle", "!");
+                telemetry.update();
+                movement /= 2;
+                movement /= 2;
+            }
             double left = movement - turning;
             double right = movement + turning;
             double max = Math.max(Math.abs(left), Math.abs(right));
@@ -40,29 +42,6 @@ public class TeleOp336 extends LinearOpMode {
             }
             robot.right.setPower(right);
             robot.left.setPower(left);
-
-            //Test this after lunch;
-            if (gamepad1.circle) {
-                telemetry.addData("Pressed A", "!");
-                telemetry.update();
-                //slow down
-                if (!resetRuntime) {
-                    runtime.reset();
-                    resetRuntime = true;
-                }
-                robot.left.setPower(left-.9*runtime.seconds()/10);
-                robot.right.setPower(right-.9*runtime.seconds()/10);
-
-            } else {
-                resetRuntime = false;
-            }
-            telemetry.addData("Power", robot.left.getPower());
-            telemetry.update();
-            if (gamepad1.cross) {
-                // make it so speeds up
-                robot.left.setPower(left*1.25);
-                robot.right.setPower(right*1.25);
-            }
 
             if (gamepad2.left_stick_y >= 0.1) {
                 robot.arm.setPower(1);
@@ -79,7 +58,7 @@ public class TeleOp336 extends LinearOpMode {
 
             if (gamepad2.x) {
                 // move servo arm for gecko wheel
-                robot.geckoArm.setPower(0.4d);
+                robot.geckoArm.setPower(0.4);
             }
             else if (gamepad2.y) {
                 robot.geckoArm.setPower(-0.4);
@@ -89,9 +68,11 @@ public class TeleOp336 extends LinearOpMode {
             }
 
             if (gamepad2.left_trigger >= 0.1) {
+                //opens claw
                 robot.clawServoLeft.setPosition(0.215);
                 robot.clawServoRight.setPosition(0.697);
             } else if (gamepad2.right_trigger >= 0.1) {
+                //closes claw
                 robot.clawServoLeft.setPosition(0.362);
                 robot.clawServoRight.setPosition(0.563);
             }
